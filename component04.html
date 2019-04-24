@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 각 컴포넌트 내부의 데이터는 캡슐화되기 때문에 다른 컴포넌트나 앱에서 접근할 수 없다. -->
+  <!-- 따라서 부모 컴포넌트에서 자식 컴포넌트로 필요한 정보를 전달하기 위해서는 속성(props)을 이용해야 한다. -->
+  <!-- 주의할 점 : 부모에서 자식으로 단방향으로만 전달할 수 있다. -->
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <!-- 리터럴이 아닌 v-bind 디렉티브를 사용 혹은 : 로 사용하면 number값으로 나온다. -->
+      <!-- myMessage 속성명은 컴포넌트를 사용하는 태그에서 my-message와 같이 케밥 표기법을 사용하여 표기해야 한다. -->
+      <list-component my-message="Hello" v-bind:count="100" :countries="['미국','영국','호주']"></list-component>
+      <list-component my-message="씬짜오" :count="21" :countries="['베트남']"></list-component>
+      <list-component my-message="니하오마" :count="21" :countries="['중국','타이완']"></list-component>
+      <list-component :count="1000"></list-component>
+    </ul>
+  </div>
+</body>
+<template id="listTemplate">
+  <!-- lidy-component 태그는  -->
+  <li>{{myMessage}}</li>
+</template>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+Vue.component('list-component', {
+  template : '#listTemplate',
+  props : { 
+    myMessage : {type:String, default:'안녕하세요'},
+    count : {type:Number, required:true},
+    countries : {
+      type: Array,
+      default: function() {
+        return ['korea']
+      }
+    }
+  }
+}) 
+
+Vue.config.devtools = true;
+new Vue({
+  el: "#app"
+})
+</script>
+</html>

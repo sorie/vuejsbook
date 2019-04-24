@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 여러개 스타일 객체를 바인딩 할 수 있다.  -->
+    <button id="a" :style="[style1, style2]" @mouseover.stop="overEvent" @mouseout.stop="outEvent" class="test">테스트</button>
+  </div>
+</body>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+<script type="text/babel">
+new Vue({
+  el: "#app",
+  data: {
+    style1 : {
+      backgroundColor:'aqua',border:'solid 1px gray',width:'100px',textAlign:'center'
+    },
+    style2 : {
+      backgroundColor:'pink'
+    }
+  },
+  methods : {
+    overEvent : function(e) {
+      this.style1.backgroundColor = "purple"
+      this.style1.color = "yellow"
+    },
+    outEvent : function(e) {
+      this.style1.backgroundColor = "aqua"
+      this.style1.color = "black"
+    }
+  }
+})
+</script>
+<style>
+  .test {background-color: yellow;border: double 4px gray}
+  .over {background-color: aqua;width:300px;height:100px}
+</style>
+</html>

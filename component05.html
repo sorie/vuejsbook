@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+#list {width: 400px;border:1px solid black;}
+
+</style>
+<template id="listTemplate">
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>이름</th>
+          <th>전화번호</th>
+          <th>주소</th>
+        </tr>
+      </thead>
+      <tbody id="contacts"> 
+        <!-- 코드를 줄이고 재사용성을 높인다. -->
+        <tr v-for="contact in contacts">
+          <td>{{contact.no}}</td>
+          <td>{{contact.name}}</td>
+          <td>{{contact.tell}}</td>
+          <td>{{contact.address}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+<body>
+  <div id="app">
+    <h1>예방 접종</h1>
+    <hr />
+    <h3>1차 대상자 : 5월 1~3일</h3>
+    <contactlist-component :contacts="list1"></contactlist-component>
+    <h3>2차 대상자 : 5월 13~15일</h3>
+    <contactlist-component :contacts="list2"></contactlist-component>
+  </div>
+</body>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+Vue.component('contactlist-component', {
+  template : '#listTemplate',
+  props : ['contacts']
+}) 
+
+Vue.config.devtools = true;
+new Vue({
+  el : "#app",
+  data : {
+    list1 : [
+      {"no":97,"name":"Kalisa Rogers","tel":"010-3456-8296","address":"서울시"},
+      {"no":96,"name":"Jesse James","tel":"010-3456-8296","address":"서울시"},
+      {"no":95,"name":"Jennifer Walker","tel":"010-3456-8296","address":"서울시"}
+    ],
+    list2 : [
+      {"no":82,"name":"Zenon Howard","tel":"010-3456-8296","address":"서울시"},
+      {"no":81,"name":"Kylie Allen","tel":"010-3456-8296","address":"서울시"}
+    ]
+  }
+})
+</script>
+</html>

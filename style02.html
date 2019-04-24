@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    div {margin:30px}
+    p {margin-top:10px;}
+    .set1 {background-color:aqua;color:purple}
+    .set2 {text-align:center;width:120px}
+    .set3 {border:sandybrown dashed 1px}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- v-bind:class를 이용해 클래스를 적용할 때는 boolean 값(true/false)을 이용해 지정. -->
+    <!-- 체크되면 데이터 속성값이 true로 변경 -->
+    <!-- 각각의 클래스 지정 여부를 결정 -->
+    <!-- 클래스 이름을 데이터속성명으로 사용하면 이런 불편한 점을 쉽게 해결할 수 있다. -->
+    <button id="btn1" v-bind:class="{set1:s1,set2:s2,set3:s3}">button1</button>
+    <p>
+      <input type="checkbox" v-model="s1" value="true" />set1 design<br/>
+      <input type="checkbox" v-model="s2" value="true" />set2 design<br/>
+      <input type="checkbox" v-model="s3" value="true" />set3 design<br/>
+    </p>
+  </div>
+</body>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+<script type="text/babel">
+new Vue({
+  el: "#app",
+  data: {
+    s1:false,s2:false,s3:false
+  }
+})
+</script>
+</html>

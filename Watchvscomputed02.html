@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello vue.js</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    x: <input type='text' v-model="x" /><br/>
+    y: <input type='text' v-model="y" /><br />
+    덧셈 결과 : {{sum}}
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+  <script type="text/babel">
+  new Vue({
+    el : "#app",
+    data : {x:0,y:0},
+    created : function() {
+      console.log("Created")
+    },
+    updated : function() {
+      console.log("updated!")
+      console.log(this.x)
+    },
+    computed : {
+      sum: function() {
+        var result = Number(this.x) + Number(this.y)
+        if(isNaN(result)) return 0
+        else return result
+      }
+    }
+  })
+  //긴 작업시간이 필요한 비동기 처리가 요구되는 경우에는 관찰 속성을 사용해야 한다. 
+  </script>
+</body>
+</html>

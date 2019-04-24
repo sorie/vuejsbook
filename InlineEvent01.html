@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="app" class="container layout1">
+    <p>
+      <input type="text" v-model="amount" class="form-control">
+    </p>
+    <p><!-- 실행할 코드를 직접 연결 -->
+      <button id="deposit" @click="balance += parseInt(amount)" class="btn btn-primary">예금</button>
+      <button id="withdraw" v-on:click="balance -= parseInt(amount)" class="btn btn-primary">출금</button>
+    </p>
+    <p>
+      계좌잔고 : {{balance}}
+    </p>
+  </div>
+</body>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+<script type="text/babel">
+new Vue({
+  el : "#app",
+  data : {
+    amount: 0,
+    balance: 0
+  }
+})
+</script>
+<style>
+  .layout1 {margin:30px}
+</style>
+</html>
