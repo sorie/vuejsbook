@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+  <script>
+  Vue.component('option-component', {
+    template : '<option>hello</option>'
+  })
+  </script>
+  <script type="text/x-template" id="select Template">
+    <select>
+      <option-component></option-component>
+      <option-component></option-component>
+    </select>
+  </script>
+</head>
+<script>
+</script>
+<body>
+  <div id="app">
+    <select-component></select-component>
+  </div>
+</body>
+<script type="text/babel">
+Vue.component('select-component', {
+  template : '#selectTemplate'
+})
+Vue.config.devtools = true
+new Vue({
+  el: "#app",
+  data: {
+    
+  }
+})
+</script>
+<style>
+  .layout1 {margin:30px}
+</style>
+</html>

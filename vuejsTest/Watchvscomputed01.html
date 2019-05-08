@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello vue.js</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    x: <input type='text' v-model="x" /><br/>
+    y: <input type='text' v-model="y" /><br />
+    덧셈 결과 : {{sum}}
+  </div>
+  <script type="text/javascript">
+  new Vue({
+  el : "#app",
+  data : {
+    x : 0,
+    y : 0,
+    sum : 0
+  },
+  watch : {
+    x : function(v){
+      console.log("## x 변경")
+      var res = Number(v) + Number(this.y)
+      if(isNaN(res)) this.sum = 0
+      else this.sum = res
+    },
+    y : function(v){
+      console.log("## y 변경")
+      var res = Number(v) + Number(this.x)
+      if(isNaN(res)) this.sum = 0
+      else this.sum = res
+    }
+  }
+  })
+  </script>
+</body>
+</html>

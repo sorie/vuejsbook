@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>키코드 수식어</title>
+    <!-- 키보드 관련 이벤트를 처리 할때 사용할 수 있는 수식어로 코드 작성을 줄일 수 있다. -->
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+  </head>
+<body>
+  <!-- 마우스 오른쪽 클릭했을 때 내장 컨텍스트 메뉴가 나타나지 않도록 15행에서 context menu  이벤트에 대해 .prevent 수식어를 적용한다. -->
+  <!-- v-on 디렉티브 = @ -->
+  <div id="app" v-on:contextmenu.prevent="ctxStop" @mouseup.left ="leftMouse" @mouseup.right="rightMouse">
+    <div>
+      Left Click : 왼쪽으로 <br />
+      Right Click : 오른쪽으로
+    </div>
+    <img src="http://sample.bmaster.kro.kr/img/foot.jpg" v-bind:style="{position:'absolute',left:pos.left+'px',top:pos.top+'px'}" alt="foot">
+  </div>  
+  <script type="text/babel">
+  new Vue({
+      el: "#app",
+      data: {
+        pos : {left : 100, top: 100}
+      },
+      methods: {
+        ctxStop : function(e) {},
+        leftMouse : function(e) {
+          if(this.pos.left > 30)
+            this.pos.left -= 30
+            console.log("Move Left!~")
+        },
+        rightMouse : function(e) {
+          this.pos.left += 30
+          console.log("Move Right!!")
+        }
+      }
+  })
+  </script>
+<style type="text/css">
+html{font-size:16px}
+#list { width: 600px; border: 1px solid black; border-collapse : collapse}
+#list td, #list th { border : 1px solid black; text-align : center }
+#list > thead > tr { color : yellow; background-color : purple}
+[v-clock] { display: none; }
+</style>
+</body>
+</html>

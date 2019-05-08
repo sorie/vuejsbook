@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>키코드 수식어</title>
+  <!-- 키보드 관련 이벤트를 처리 할때 사용할 수 있는 수식어로 코드 작성을 줄일 수 있다. -->
+</head>
+<body>
+  <div id="app" v-cloak>
+    <p>
+      name : <input type="text" v-model="name" v-on:keyup="search" placeholder="두글자 이상 입력하세요">
+    </p>
+    <table id="list">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>이름</th>
+          <th>전화번호</th>
+          <th>주소</th>
+        </tr>
+      </thead>
+      <tbody id="contacts">
+        <tr v-for="contact in contactlist">
+          <td>{{contact.no}}</td>
+          <td>{{contact.name}}</td>
+          <td>{{contact.tel}}</td>
+          <td>{{contact.address}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-show="isProcessing === true">조회중</div>
+  </div>
+  <script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+  <script type="text/babel">
+  new Vue({
+      el: "#app",
+      data: {
+        name: "",
+        isProcessing: false,
+        contactlist: []
+      },
+      methods: {
+        search: function(e){
+          if(e.keyCode === 13) {
+            var val = e.target.value
+            if(val.length >= 2) {
+              this.fetchContacts()
+            } else {
+              this.contactlist = []
+            }
+          }
+        },
+        // 이제는 타이핑을 할 때마다 메서드가 호출되지는 않기 때문에 _.debounce()를 이용할 필요가 없다.
+        fetchContacts : function() {
+          this.contactlist = []
+          this.isProcessing = true
+          var url = "http://sample.bmaster.kro.kr/contacts_long/search/"+this.name
+          var vm = this
+          fetch(url)
+            .then(function(response){
+              return response.json()
+            }).then(function(json){
+              vm.contactlist = json
+              vm.isProcessing = false
+            }).catch(function(ex){
+              console.log('parsing failed', ex)
+              vm.contactlist = []
+              vm.isProcessing = false
+            })        
+        }
+      }
+  })
+  </script>
+<style type="text/css">
+html{font-size:16px}
+#list { width: 600px; border: 1px solid black; border-collapse : collapse}
+#list td, #list th { border : 1px solid black; text-align : center }
+#list > thead > tr { color : yellow; background-color : purple}
+[v-clock] { display: none; }
+</style>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<!-- child Component start -->
+<style>
+.buttonstyle {width:120px;height:30px;text-align:center}
+</style>
+<template id="childTemplate">
+  <div>
+    <!-- buttonInfo 속성을 정의하였고 이 속성은 부모 컴포넌트로부터 값을 전달 받는다. -->
+    <!-- 버튼을 만들 때마다 콧수염 표현식을 이용해 text값을 찍어주고, data-lang 특성에 value값을 바인딩한다. -->
+    <button class="buttonstyle" v-on:click="clickEvent" v-bind:data-lang="buttonInfo.value">{{buttonInfo.text}}</button>
+  </div>
+</template>
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js"></script>
+<script type="text/javascript">
+Vue.component('child-component', {
+  template : '#childTemplate',
+  props : ['buttonInfo']
+  ,methods : {
+    clickEvent : function(e) {
+      // 자식 컴포넌트 내부에서 버튼이 클릭되면 $emit() 메서드를 이용해 timeclick  이벤트를 발신.
+      // 부모 컴포넌트에서는 v-on 디렉티브를 이용해 timeclick 이벤트를 처리
+      // $emit()을 이용해 이벤트를 발신할 때 필요한 정보들을 인자로 전달. 
+      this.$emit('timeclick',e.target.innerText, e.target.dataset.lang)
+    }
+  }
+}) 
+</script>
+<!-- child component 끝 -->
+<!-- parent component 시작 -->
+<!-- 자식 컴포넌트를 사용하는 부모 컴포넌트는 buttons 속성과 msg 데이터 옵션을 포함 -->
+<!-- 데이터 옵션은 해당 컴포넌트 내에서만 사용하기 위함 -->
+<!-- vm Vue 인스턴스의 buttons 데이터를 전달 받아 v-for 디렉티브를 사용해 반복적으로 생성되는 자식 컴포넌트에 각각의 배열값을 바인딩한다. -->
+<template id="parent-template">
+  <div>
+    <!-- 템플릿 문자열에서 렌더링한 buttonInfo.text와 buttonInfo.value 값. -->
+    <!-- 전달된 두 개의 인자는 부모 컴포넌트의 timeclickEvent 메서드의 k,v인자로 전달되어 처리. -->
+    <!-- 이벤트 처리 메서드의 인자는 자유롭게 정의 -->
+    <!-- 이벤트 처리 메서드의 k,v 두 개의 인자를 통해 자식 컴포넌트로부터 부모 컴포넌트로 필요한 정보를 전달 -->
+    <child-component v-for="s in buttons" v-bind:button-info="s" v-on:timeclick="timeclickEvent">
+    </child-component>
+    <hr />
+    <div>{{ msg }}</div>
+  </div>
+</template>
+<script>
+Vue.component('parent-component',{
+  template: '#parent-template',
+  props : ['buttons'],
+  data : function() {
+    return {msg:""}
+  },
+  methods : {
+    timeclickEvent : function(k, v) {
+      this.msg = k + ", " + v
+    }
+  }
+})
+</script>
+<!-- parent Component 끝 -->
+<body>
+  <div id="app">
+    <parent-component :buttons="buttons"></parent-component>
+  </div>
+</body>
+<script>
+Vue.config.devtools = true
+var vm = new Vue ({
+  el : "#app",
+  data : {
+    buttons : [
+      {text : "Hello", value : "english"},
+      {text : "sin zao", value : "vietnam"},
+      {text : "ni hao", value : "chiness"}
+    ]
+  }
+})
+</script>
+</html>
