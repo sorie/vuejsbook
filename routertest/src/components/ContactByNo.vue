@@ -43,11 +43,9 @@ export default {
   created : function() {
     this.no = this.$route.params.no;
   },
-  watch : {
-      '$route'(to, from) {
-          this.no = to.params.no;
-          this.backtothe = from.path;
-      }
+  beforeRouteUpdate(to) {
+    console.log("**beforeRouteUpdate")
+    this.no = to.params.no;
   },
   computed : {
     contact : function() {
@@ -69,7 +67,6 @@ export default {
     box-shadow: none;
     border-radius: 2px;
     color: #fff;
-
   }
   .btn_back a,
   .btn_back a:hover,

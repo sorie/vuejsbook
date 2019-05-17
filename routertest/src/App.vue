@@ -31,7 +31,13 @@ const router = new VueRouter({
     { 
       path:'/contacts', name:'contacts', component: Contacts,
       children : [
-        { path : ':no', name:'contactbyno', component: ContactByNo }
+        { 
+          path : ':no', name:'contactbyno', component: ContactByNo 
+          ,beforeEnter : (to,from,next)=>{
+            console.log("@@beforeEnter:" + from.path + "==>"+to.path)
+            next()//다음훅으로진행됨.
+          }
+        }
       ] 
     },
   ]
