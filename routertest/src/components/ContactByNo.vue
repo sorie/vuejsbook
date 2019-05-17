@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <button type="button" class="btn btn_back">
-      <router-link to="/">Back</router-link>
+    <button type="button" class="btn_back">
+      <router-link :to="''+ backtothe" >Back</router-link>
     </button>
     <h1>연락처 상세</h1>
     <div>
@@ -36,7 +36,8 @@ export default {
   data : function() {
     return {
       no : 0,
-      contacts : contactlist.contacts
+      contacts : contactlist.contacts,
+      backtothe : ''
     }
   },
   created : function() {
@@ -45,7 +46,7 @@ export default {
   watch : {
       '$route'(to, from) {
           this.no = to.params.no;
-          console.log(from);
+          this.backtothe = from.path;
       }
   },
   computed : {
@@ -64,7 +65,11 @@ export default {
   .btn_back {
     float: right;
     background-color: green;
+    border: 1px solid transparent;
+    box-shadow: none;
+    border-radius: 2px;
     color: #fff;
+
   }
   .btn_back a,
   .btn_back a:hover,
