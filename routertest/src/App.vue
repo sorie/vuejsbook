@@ -21,9 +21,11 @@ import Home from './components/Home.vue'
 import About from './components/About.vue'
 import Contacts from './components/Contacts.vue'
 import ContactByNo from './components/ContactByNo.vue'
+import NotFound from './components/NotFound.vue';
 import VueRouter from 'vue-router'
 
 const router = new VueRouter({
+  mode : "history", //해시태그제거
   routes : [
     { path:'/', component: Home },
     { path:'/home', name:'home', component: Home },
@@ -35,12 +37,24 @@ const router = new VueRouter({
           path : ':no', name:'contactbyno', component: ContactByNo 
           ,beforeEnter : (to,from,next)=>{
             console.log("@@beforeEnter:" + from.path + "==>"+to.path)
-            next()//다음훅으로진행됨.
+            if(from.path.startsWith("/contacts"))
+              next()//다음훅으로진행됨.
+            else
+              next("/home")
           }
         }
       ] 
     },
+    { path: '*', component: NotFound }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  console.log("** beforeEach!!!")
+  next();
+})
+router.afterEach((to, from) => {
+  console.log("** afterEach!!")
 })
 
 export default {
