@@ -24,6 +24,10 @@ import ContactByNo from './components/ContactByNo.vue'
 import NotFound from './components/NotFound.vue';
 import VueRouter from 'vue-router'
 
+// function connectQueryToProp(route) {
+//   return { no : route.query.no, path: route.path }
+// }
+
 const router = new VueRouter({
   mode : "history", //해시태그제거
   routes : [
@@ -34,14 +38,14 @@ const router = new VueRouter({
       path:'/contacts', name:'contacts', component: Contacts,
       children : [
         { 
-          path : ':no', name:'contactbyno', component: ContactByNo 
-          ,beforeEnter : (to,from,next)=>{
-            console.log("@@beforeEnter:" + from.path + "==>"+to.path)
-            if(from.path.startsWith("/contacts"))
-              next()//다음훅으로진행됨.
-            else
-              next("/home")
-          }
+          path : ':no', name:'contactbyno', component: ContactByNo, props: true
+          // ,beforeEnter : (to,from,next)=>{
+          //   console.log("@@beforeEnter:" + from.path + "==>"+to.path)
+          //   if(from.path.startsWith("/contacts"))
+          //     next()//다음훅으로진행됨.
+          //   else
+          //     next("/home")
+          // }
         }
       ] 
     },

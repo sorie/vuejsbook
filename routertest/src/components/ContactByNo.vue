@@ -33,19 +33,12 @@ import contactlist from '../ContactList';
 
 export default {
   name : 'contactbyno',
+  props : ['no'],
   data : function() {
     return {
-      no : 0,
       contacts : contactlist.contacts,
       backtothe : ''
     }
-  },
-  created : function() {
-    this.no = this.$route.params.no;
-  },
-  beforeRouteUpdate(to) {
-    console.log("**beforeRouteUpdate")
-    this.no = to.params.no;
   },
   computed : {
     contact : function() {
