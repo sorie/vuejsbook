@@ -7,13 +7,13 @@
       <input type="text" name="no" class="long" disabled v-model="contact.no">
     </div>
     <div class="form-group">
-      <label for="">이름</label><input type="text" v-model="contact.name">
+      <label for="">이름</label><input type="text" v-model="contact.name" ref="name">
     </div>
     <div class="form-group">
-      <label for="">전화번호</label><input type="text" v-model="contact.tel">
+      <label for="">전화번호</label><input type="text" v-model="contact.tel" ref="tel">
     </div>
     <div class="form-group">
-      <label for="">주소</label><input type="text" v-model="contact.address">
+      <label for="">주소</label><input type="text" v-model="contact.address" ref="address">
     </div>
     <div class="form-group">
       <div>&nbsp;</div>
@@ -29,6 +29,10 @@ import Constant from '../Constant';
 
 export default {
   name: 'contactform',
+  data : function() {
+    return { mode:"add" }
+  },
+  props : [ 'no' ],
   computed : {
     btnText : function() {
       if (this.mode != 'update') return '추 가';
@@ -38,18 +42,31 @@ export default {
       if (this.mode != 'update') return '새로운 연락처 추가';
       else return '연락처 수정';
     },
-    ...mapState(['mode', 'contact'])
+    ...mapState(['contact', 'contactlist'])
+  },
+  mounted : function() {
+    this.$refs.name.focus();
+    var cr = this.$router.currentRoute;
+    if (cr.fullPath.indexOf('/add') > -1) {
+      this.mode = "add";
+      this.$store.dispatch(Constant.INITIALIZE_CONTACT_ONE);
+    } else if (cr.fullPath.indexOf('/update') > -1) {
+      this.mode = "update";
+      this.$store.dispatch(Constant.FETCH_CONTACT_ONE, {no:this.no})
+    }
   },
   methods : {
     submitEvent() {
       if(this.mode != 'update'){
         this.$store.dispatch(Constant.ADD_CONTACT);
+        this.$router.push({name:'contacts', query: {page:1}})
       } else {
         this.$store.dispatch(Constant.UPDATE_CONTACT);
+        this.$router.push({name:'contacts', query: {page:this.contactlist.pageno}})
       }
     },
     cancelEvent() {
-      this.$store.dispatch(Constant.CANCEL_FORM);
+      this.$router.push({name:'contacts', query: {page:this.contactlist.pageno}})
     }
   }
 }

@@ -1,10 +1,8 @@
 export default {
   //변이와 액션 모두 사용
-  ADD_CONTACT_FORM : "addContactForm", //입력폼 나타내기
-  CANCEL_FORM : "cancelForm", //입력,수정폼 닫기
-  EDIT_CONTACT_FORM : "editContactFrom", //수정폼 나타내기
-  EDIT_PHOTO_FORM : "editPhotoForm", //사진 편집폼 나타내기
   FETCH_CONTACTS : "fetchContacts", //연락처 조회
+  FETCH_CONTACT_ONE : "fetchContactOne", //연락처 한건 조회
+  INITIALIZE_CONTACT_ONE : "initializeContactOne", //연락처 초기화
 
   //액션만 조회
   ADD_CONTACT : "addContact", //연락처 추가

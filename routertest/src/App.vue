@@ -24,9 +24,9 @@ import ContactByNo from './components/ContactByNo.vue'
 import NotFound from './components/NotFound.vue';
 import VueRouter from 'vue-router'
 
-// function connectQueryToProp(route) {
-//   return { no : route.query.no, path: route.path }
-// }
+function connectQueryToProp(route) {
+  return { no : route.query.no, path: route.path }
+}
 
 const router = new VueRouter({
   mode : "history", //해시태그제거

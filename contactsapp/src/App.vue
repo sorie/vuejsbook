@@ -3,27 +3,19 @@
     <div class="page-header">
       <h1 class="text-center">연락처 관리 애플리케이션</h1>
       <p>(Dynamic Component + Vuex + Axios) </p>
+      <div class="btn-group">
+        <router-link to="/home" class="btn btn-info menu">HOME</router-link>
+        <router-link to="/about" class="btn btn-info menu">About</router-link>
+        <router-link to="/contacts" class="btn btn-info menu">Contacts</router-link>
+      </div>
     </div>
-    <component :is="currentView"></component>
-    <contact-list></contact-list>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ContactList from './components/ContactList';
-import ContactForm from './components/ContactForm';
-import UpdatePhoto from './components/UpdatePhoto';
-
-import { mapState } from 'vuex';
-
 export default {
-  name: 'app',
-  components: {
-    ContactList,
-    ContactForm,
-    UpdatePhoto
-  },
-  computed : mapState(['currentView'])
+  name: 'app'
 }
 </script>
 
