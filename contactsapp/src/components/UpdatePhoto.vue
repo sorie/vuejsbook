@@ -8,8 +8,12 @@
         <img class="thumb" :src="contact.photo">
       </div>
       <div>
+        <label>변경 사진</label>
+        <img class="thumb" :src="preimg">
+      </div>
+      <div>
         <label>사진 파일 선택</label>
-        <input type="file" ref="photofile">
+        <input type="file" ref="photofile" v-on:change="previewimg" >
       </div>
       <div>
         <button type="button" class="btn btn-primary" value="변 경" 
@@ -27,10 +31,15 @@ import Constant from '../Constant'
 import { mapState } from 'vuex';
 
 export default {
-  name: "updatePhoto",
+  name : "updatePhoto",
   props : [ 'no' ],
-  computed: mapState([ 'contact', 'contactlist' ]),
-  mounted: function() {
+  data () {
+    return {
+      preimg : require('../assets/logo.png') //Getting Asset Paths in JavaScript 참고(require이 필요한 이유)
+    }
+  },
+  computed : mapState([ 'contact', 'contactlist' ]),
+  mounted : function() {
     this.$store.dispatch(Constant.FETCH_CONTACT_ONE, { no:this.no })
   },
   methods: {
@@ -39,8 +48,22 @@ export default {
     },
     photoSubmit : function() {
       var file = this.$refs.photofile.files[0];
-      this.$store.dispatch(Constant.UPDATE_PHOTO, { no:this.contact.no, file:file });
-      this.$router.push({name:"contacts", query: {page:this.contactlist.pageno}});
+      if(file) { 
+        this.$store.dispatch(Constant.UPDATE_PHOTO, { no:this.contact.no, file:file });
+        this.$router.push({name:"contacts", query: {page:this.contactlist.pageno}});
+      } else if(!file) {
+        alert("변경할 사진을 선택해주세요.")
+      }
+    },
+    previewimg : function() {
+      var file = this.$refs.photofile.files[0];
+      var reader = new FileReader();
+      var me = this;
+      reader.readAsDataURL(file);
+      reader.onload = function  () {
+        me.preimg = reader.result; 
+      }
+      
     }
   }
 }

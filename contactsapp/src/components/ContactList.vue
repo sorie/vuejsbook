@@ -67,10 +67,9 @@ export default {
     },
     watch : {
         '$route' : function(to) {
-            if (to.query.page != this.contactlist.pageno) {
+            if (to.query.page && to.query.page != this.contactlist.pageno) {
                 var page = to.query.page;
-                console.log(page);
-                this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno:page })
+                this.$store.dispatch(Constant.FETCH_CONTACTS, { pageno:page });
                 this.$refs.pagebuttons.selected = page-1;
             }
         }
